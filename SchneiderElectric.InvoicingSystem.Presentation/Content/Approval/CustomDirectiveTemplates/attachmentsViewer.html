@@ -1,0 +1,15 @@
+﻿<div>
+    <div>
+        <p>Attachments</p>
+    </div>
+    <md-card class="md-padding card-background-color">
+        <div ng-if="hasAttachments">
+            <div ng-repeat="file in files">
+                <md-button class="md-primary" ng-click="downloadFile(file.FileId)">{{file.Name}}</md-button>
+            </div>
+        </div>
+        <div ng-if="!hasAttachments">
+            {{errorMessage}}
+        </div>
+    </md-card>
+</div>

@@ -1,0 +1,472 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <title>Schneider Invoicing System</title>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+    <!--Icons font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <!-- Scripts -->
+    <script src="/Scripts/Engineer/app.js"></script>
+</head>
+
+<body style="background-color: white">
+    <div ng-app="myApp" ng-controller="engineerController" ng-cloak layout="column">
+        <div>
+            <md-toolbar class="md-primary">
+                <div class="md-toolbar-tools">
+                    <h2 flex md-truncate>
+                        <md-icon md-font-library="material-icons" class="md-light md-48">person</md-icon>
+                        Welcome: {{expense.EmployeeSapId}}
+                    </h2>
+
+                    <md-button class="md-mini" ng-click="OpenNotifications(engineer.sapNumber)">
+                        <md-icon md-font-library="material-icons" class="md-light md-48">public</md-icon>
+                    </md-button>
+
+                    <md-button class="md-icon-button md-primary" aria-label="Settings">
+                        <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-tabs md-dynamic-height md-border-bottom class="" md-selected="TabIndex">
+                <md-tab label="New Expense">
+                    <div layout="row" layout-align="center start" class="md-padding">
+                        <md-whiteframe class="md-whiteframe-1dp" flex-gt-sm="50">
+
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    Expense Template
+                                </div>
+                                <br />
+                                <div>
+                                    <md-content>
+                                        <form>
+                                            <md-tabs>
+                                                <md-tab label="Assign expense">
+                                                    <md-content class="md-padding">
+                                                        <!--<h3>Employee and project info</h3>-->
+                                                        <div layout="row" layout-align="space-between center">
+                                                            <md-input-container flex="40">
+                                                                <label>Employee Sap Number</label>
+                                                                <input ng-model="expense.EmployeeSapId" required ng-pattern="/^[a-zA-Z0-9]{5}$/" md-maxlength="5" md-minlength="5">
+                                                                <div ng-messages="assign.EmployeeSapId.$error" role="alert">
+                                                                    <div ng-message="required">This is a required field.</div>
+                                                                    <div ng-message="pattern">Only alphanumeric characters are allowed.</div>
+                                                                    <div ng-message-exp="['maxlength', 'minlength']">Yo need to enter exactly 5 characters only.</div>
+                                                                </div>
+                                                            </md-input-container>
+                                                            <md-input-container flex="40">
+                                                                <label>Project Sap Number</label>
+                                                                <input ng-model="expense.ProjectSapId" required ng-pattern="/^[a-zA-Z]{2,3}_[a-zA-Z0-9]{5}$/" md-maxlength="10" md-minlength="6">
+                                                                <div ng-messages="assign.ProjectSapId.$error" role="alert">
+                                                                    <div ng-message="required">This is a required field.</div>
+                                                                    <div ng-message="pattern">Only alphanumeric characters are allowed.</div>
+                                                                    <div ng-message-exp="['maxlength', 'minlength']">Yo need to enter the country code followed by an undersocre then 5 characters only.</div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                        <br />
+                                                        <!--<h3>Set the starting and ending dates</h3>-->
+                                                        <div layout="row" layout-align="space-between center">
+                                                            <div flex="40">
+                                                                <md-datepicker ng-model="expense.StartDate" md-placeholder="From date"></md-datepicker>
+                                                            </div>
+                                                            <div flex="40">
+                                                                <md-datepicker ng-model="expense.EndDate" md-placeholder="To date" md-min-date="fromDate"></md-datepicker>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div>
+                                                            <md-input-container>
+                                                                <md-select type="number" ng-model="expense.CountryListID" placeholder="Travelled To" required>
+                                                                    <md-option ng-value="country.ID" ng-repeat="country in countries">{{country.Country}}</md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <md-input-container flex="100">
+                                                                <label>Description</label>
+                                                                <textarea ng-model="expense.ExpenseDescription" required md-maxlength="150"></textarea>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </md-content>
+                                                </md-tab>
+
+                                                <md-tab md-active label="Expense Details">
+                                                    <md-content class="md-padding">
+                                                        <md-card>
+                                                            <md-toolbar layout="row" class="md-hue-3">
+                                                                <div class="md-toolbar-tools">
+                                                                    <span>Self Expenses</span>
+                                                                </div>
+                                                            </md-toolbar>
+
+                                                            <md-tabs md-dynamic-height md-border-bottom>
+                                                                <md-tab label="Accomodation">
+                                                                    <md-content class="md-padding" ng-repeat="accomodation in accomodationExpenses track by $index">
+                                                                        <md-input-container flex="50">
+                                                                            <md-checkbox ng-model="accomodation.ByAmex">By Amex?</md-checkbox>
+                                                                        </md-input-container>
+                                                                        <div layout="row" layout-align="space-between start">
+                                                                            <md-input-container flex="30">
+                                                                                <!--<label>Amount</label>-->
+                                                                                <label>Amount</label>
+                                                                                <input required type="number" min="0.5" step="0.5" ng-model="accomodation.Amount" />
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Currency</label>
+                                                                                <md-select type="number" ng-model="accomodation.CurrencyID" required ng-disabled="accomodation.ByAmex">
+                                                                                    <md-optgroup label="Choose a currency">
+                                                                                        <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                                    </md-optgroup>
+                                                                                </md-select>
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Rate</label>
+                                                                                <input required type="number" min="0.1" step="0.1" ng-model="accomodation.RateToUS" ng-disabled="accomodation.ByAmex" />
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row">
+                                                                            <md-input-container flex="100">
+                                                                                <label>Description</label>
+                                                                                <textarea ng-model="accomodation.Description" required md-maxlength="150"></textarea>
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                            <md-button aria-label="Clear" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="accomodationExpenses.splice($index, 1)">
+                                                                                <md-icon md-font-library="material-icons" style="color: red" class="md-light md-48">clear</md-icon>
+                                                                            </md-button>
+                                                                        </div>
+
+                                                                    </md-content>
+                                                                    <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                        <md-button aria-label="Add" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="addSelfExpense('Accomodation')">
+                                                                            <md-icon md-font-library="material-icons" class="md-light md-48">add</md-icon>
+                                                                        </md-button>
+                                                                    </div>
+                                                                </md-tab>
+
+                                                                <md-tab label="Transportation">
+                                                                    <md-content class="md-padding" ng-repeat="transportation in transportationExpenses track by $index">
+                                                                        <md-input-container flex="50">
+                                                                            <md-checkbox ng-model="transportation.ByAmex">By Amex?</md-checkbox>
+                                                                        </md-input-container>
+                                                                        <div layout="row" layout-align="space-between start">
+                                                                            <md-input-container flex="30">
+                                                                                <label>Amount</label>
+                                                                                <input required type="number" min="1" step="1" ng-model="transportation.Amount" />
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Currency</label>
+                                                                                <md-select type="number" ng-model="transportation.CurrencyID" required ng-disabled="transportation.ByAmex">
+                                                                                    <md-optgroup label="Choose a currency">
+                                                                                        <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                                    </md-optgroup>
+                                                                                </md-select>
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Rate</label>
+                                                                                <input required type="number" min="0.1" step="0.1" ng-model="transportation.RateToUS" ng-disabled="transportation.ByAmex" />
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row">
+                                                                            <md-input-container flex="100">
+                                                                                <label>Description</label>
+                                                                                <textarea ng-model="transportation.Description" required md-maxlength="150"></textarea>
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                            <md-button aria-label="Clear" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="transportationExpenses.splice($index, 1)">
+                                                                                <md-icon md-font-library="material-icons" style="color: red" class="md-light md-48">clear</md-icon>
+                                                                            </md-button>
+                                                                        </div>
+
+                                                                    </md-content>
+                                                                    <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                        <md-button aria-label="Add" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="addSelfExpense('Transportation')">
+                                                                            <md-icon md-font-library="material-icons" class="md-light md-48">add</md-icon>
+                                                                        </md-button>
+                                                                    </div>
+                                                                </md-tab>
+
+                                                                <md-tab label="Medical">
+                                                                    <md-content class="md-padding" ng-repeat="medical in medicalExpenses track by $index">
+                                                                        <md-input-container flex="50">
+                                                                            <md-checkbox ng-model="medical.ByAmex">By Amex?</md-checkbox>
+                                                                        </md-input-container>
+                                                                        <div layout="row" layout-align="space-between start">
+                                                                            <md-input-container flex="30">
+                                                                                <label>Amount</label>
+                                                                                <input required type="number" min="1" step="1" ng-model="medical.Amount" />
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Currency</label>
+                                                                                <md-select type="number" ng-model="medical.CurrencyID" required ng-disabled="medical.ByAmex">
+                                                                                    <md-optgroup label="Choose a currency">
+                                                                                        <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                                    </md-optgroup>
+                                                                                </md-select>
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Rate</label>
+                                                                                <input required type="number" min="0.1" step="0.1" ng-model="medical.RateToUS" ng-disabled="medical.ByAmex" />
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row">
+                                                                            <md-input-container flex="100">
+                                                                                <label>Description</label>
+                                                                                <textarea ng-model="medical.Description" required md-maxlength="150"></textarea>
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                            <md-button aria-label="Clear" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="medicalExpenses.splice($index, 1)">
+                                                                                <md-icon md-font-library="material-icons" style="color: red" class="md-light md-48">clear</md-icon>
+                                                                            </md-button>
+                                                                        </div>
+                                                                    </md-content>
+                                                                    <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                        <md-button aria-label="Add" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="addSelfExpense('Medical')">
+                                                                            <md-icon md-font-library="material-icons" class="md-light md-48">add</md-icon>
+                                                                        </md-button>
+                                                                    </div>
+                                                                </md-tab>
+
+                                                                <md-tab label="Other">
+                                                                    <md-content class="md-padding" ng-repeat="other in otherExpenses track by $index">
+                                                                        <md-input-container flex="50">
+                                                                            <md-checkbox ng-model="other.ByAmex">By Amex?</md-checkbox>
+                                                                        </md-input-container>
+                                                                        <div layout="row" layout-align="center start">
+                                                                            <md-input-container flex="30">
+                                                                                <label>Amount</label>
+                                                                                <input required type="number" min="1" step="1" ng-model="other.Amount" />
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Currency</label>
+                                                                                <md-select type="number" ng-model="other.CurrencyID" required ng-disabled="other.ByAmex">
+                                                                                    <md-optgroup label="Choose a currency">
+                                                                                        <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                                    </md-optgroup>
+                                                                                </md-select>
+                                                                            </md-input-container>
+                                                                            <md-input-container flex="30">
+                                                                                <label>Rate</label>
+                                                                                <input required type="number" step="0.1" ng-model="other.RateToUS" ng-disabled="other.ByAmex" />
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row">
+                                                                            <md-input-container flex="100">
+                                                                                <label>Description</label>
+                                                                                <textarea ng-model="other.Description" required md-maxlength="150"></textarea>
+                                                                            </md-input-container>
+                                                                        </div>
+                                                                        <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                            <md-button aria-label="Clear" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="otherExpenses.splice($index, 1)">
+                                                                                <md-icon md-font-library="material-icons" style="color: red" class="md-light md-48">clear</md-icon>
+                                                                            </md-button>
+                                                                        </div>
+
+                                                                    </md-content>
+                                                                    <div layout="row" layout-align="center ceter" class="md-padding">
+                                                                        <md-button aria-label="Add" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="addSelfExpense('Other')">
+                                                                            <md-icon md-font-library="material-icons" class="md-light md-48">add</md-icon>
+                                                                        </md-button>
+                                                                    </div>
+                                                                </md-tab>
+                                                            </md-tabs>
+                                                        </md-card>
+
+
+                                                        <md-card>
+                                                            <md-toolbar layout="row" class="md-hue-3">
+                                                                <div class="md-toolbar-tools">
+                                                                    <span>Perdiem Expenses</span>
+                                                                </div>
+                                                            </md-toolbar>
+                                                            <md-card-content>
+                                                                <md-input-container flex="50">
+                                                                    <label>Number of days</label>
+                                                                    <input required type="number" min="1" step="any" ng-model="expense.PerdiemExpenses[0].NumberOfDays" />
+                                                                </md-input-container>
+                                                                <div layout="row">
+                                                                    <md-input-container>
+                                                                        <label>Location</label>
+                                                                        <md-select type="number" ng-model="expense.PerdiemExpenses[0].RateId" required>
+                                                                            <md-option ng-value="rate.RateId" ng-repeat="rate in rates">{{rate.RateType}}</md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div layout="row" layout-align="space-between start">
+                                                                    <md-input-container flex="40">
+                                                                        <label>Currency</label>
+                                                                        <md-select type="number" ng-model="expense.PerdiemExpenses[0].CurrencyID" required>
+                                                                            <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                    <md-input-container flex="40">
+                                                                        <label>Amount</label>
+                                                                        <input required type="number" min="1" step="1" ng-model="expense.PerdiemExpenses[0].Amount" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </md-card-content>
+                                                        </md-card>
+
+
+                                                        <md-card>
+                                                            <md-toolbar layout="row" class="md-hue-3">
+                                                                <div class="md-toolbar-tools">
+                                                                    <span>Overtime Expenses</span>
+                                                                </div>
+                                                            </md-toolbar>
+                                                            <md-card-content>
+                                                                <div layout="row" layout-align="space-between start">
+                                                                    <md-input-container flex="50">
+                                                                        <label>Number of hours</label>
+                                                                        <input required type="number" min="1" step="any" ng-model="expense.OverTimeExpenses[0].NumberOfHours" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <md-input-container>
+                                                                    <label>Category</label>
+                                                                    <md-select type="number" ng-model="expense.OverTimeExpenses[0].ExpenseCategory" required>
+                                                                        <md-option ng-value="category.ExpenseCategoryId" ng-repeat="category in categories">{{category.ExpenseCategoryType}}</md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                                <div layout="row" layout-align="space-between start">
+                                                                    <md-input-container flex="30">
+                                                                        <label>Currency</label>
+                                                                        <md-select type="number" ng-model="expense.OverTimeExpenses[0].CurrencyID" required>
+                                                                            <md-option ng-value="currency.CurrencyID" ng-repeat="currency in currencies">{{currency.CurrencyName}}</md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                    <md-input-container flex="30">
+                                                                        <label>Rate</label>
+                                                                        <input required type="number" min="0.1" step="0.1" ng-model="expense.OverTimeExpenses[0].RateToUS" />
+                                                                    </md-input-container>
+                                                                    <md-input-container flex="30">
+                                                                        <label>Amount</label>
+                                                                        <input required type="number" min="1" step="0.5" ng-model="expense.OverTimeExpenses[0].Amount" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </md-card-content>
+                                                        </md-card>
+                                                        <!--Upload-->
+                                                        <md-card @*class="container"*@>
+                                                            <md-toolbar layout="row" class="md-hue-3">
+                                                                <div class="md-toolbar-tools">
+                                                                    <span>Attachments</span>
+                                                                </div>
+                                                            </md-toolbar>
+                                                            <md-content class="panel-body">
+                                                                <table class="table table-responsive table-hover table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td>Title</td>
+                                                                            <td>Size</td>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                        <tr ng-repeat="attachment in attachments track by $index">
+                                                                            <td>{{attachment.Name}}</td>
+                                                                            <td>{{attachment.Size}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <div class="row">
+                                                                    <div class="md-padding">
+                                                                        @*<input type="file" multiple ng-files="getTheFiles($files)">*@
+                                                                        <upload-files call-function="getTheFiles($files)"></upload-files>
+                                                                    </div>
+                                                                    <div class="md-padding">
+                                                                        <md-button class="md-warn" ng-click="reset()" ng-disabled="!attachments.length">Clear</md-button>
+                                                                    </div>
+                                                                </div>
+                                                            </md-content>
+                                                        </md-card>
+                                                    </md-content>
+
+                                                    <div layout-align="center" layout="row">
+                                                        <div flex="50" layout="row" layout-align="center">
+                                                            <md-button class="md-primary md-raised" ng-click="Save(expense.ExpenseId); TabIndex = TabIndex + 1">Save</md-button>
+                                                        </div>
+                                                    </div>
+                                                </md-tab>
+                                            </md-tabs>
+                                        </form>
+                                    </md-content>
+                                </div>
+                            </md-toolbar>
+                        </md-whiteframe>
+                    </div>
+                </md-tab>
+                <md-tab label="Saved Expenses" >
+
+                    <div layout="row" layout-align="center start" class="md-padding">
+                        <md-whiteframe class="md-whiteframe-1dp" flex-gt-sm="50">
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    Expense Template
+                                </div>
+                                <br />
+                                <div>
+                                    <md-content>
+                                        <form>
+                                            <md-content class="md-padding">
+
+                                                    <md-card ng-repeat="savedExpense in savedExpenses">
+                                                        <md-card-title>
+                                                            <md-card-title-text>
+                                                                <span class="md-headline">{{ savedExpense.ExpenseDescription }}</span>
+                                                            </md-card-title-text>
+                                                        </md-card-title>
+                           
+                                                        <md-card-actions layout="row" layout-align="end center">
+                                                            <md-button aria-label="Edit" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="EditExpense(savedExpense.ExpenseId); TabIndex = TabIndex - 1">
+                                                                <md-icon layout-align="left" md-font-library="material-icons" class="md-light md-48">edit</md-icon>
+                                                            </md-button>
+
+                                                            <md-button aria-label="Submit" class="md-fab md-mini md-palette md-no-focus md-primary md-icon-button" ng-click="Submit(savedExpense)">
+                                                                <md-icon md-font-library="material-icons" class="md-light md-48">check</md-icon>
+                                                            </md-button>
+                                                        </md-card-actions>
+                                                    </md-card>
+                                                  
+                                            </md-content>
+                                        </form>
+                                    </md-content>
+                                </div>
+                            </md-toolbar>
+                        </md-whiteframe>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </div>
+    </div>
+</body>
+
+</html>

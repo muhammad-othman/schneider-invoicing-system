@@ -1,0 +1,39 @@
+﻿<div layout="column" layout-align="center center">
+    <div id="spinner" ng-if="showSpinner">
+        <img src="/Content/Approval/img/spinner.gif" />
+    </div>
+    <div id="table" ng-if="showTable">
+        <table ng-table="expensesTable" class="table table-striped table-bordered table-condensed cursor-pointer">
+            <tr ng-repeat="expense in $data" ng-click="viewExpense(expense)">
+
+                <td data-title="'Employee Name'" sortable="'EmployeeName'" filter="{'EmployeeName': 'text'}">
+                    {{expense.EmployeeName}}
+                </td>
+
+                <td data-title="'Project Name'" sortable="'ProjectName'" filter="{'ProjectName': 'text'}" ng-if="showProjectName">
+                    {{expense.ProjectName}}
+                </td>
+
+                <td data-title="'Country'" sortable="'CountryList.Country'" filter="{'CountryList.Country': 'select'}" filter-data="countries">
+                    {{expense.CountryList.Country}}
+                </td>
+
+                <td data-title="'Start Date'" sortable="'EndDate'">
+                    {{expense.StartDate.toDateString()}}
+                </td>
+
+                <td data-title="'End Date'" sortable="'StartDate'">
+                    {{expense.EndDate.toDateString()}}
+                </td>
+
+                <td data-title="'Expense State'" filter="{'ExpenseState': 'select'}" filter-data="states" ng-if="atAllTab">
+                    {{getStateDisplayName(expense)}}
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div id="error" ng-if="showError">
+        <h3>{{errorMessage}}</h3>
+    </div>
+</div>

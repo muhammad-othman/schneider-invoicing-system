@@ -1,0 +1,24 @@
+﻿<div>
+    <div id="error" ng-if="showError" layout-align="center center">
+        <div class="md-padding">
+            <h4>{{errorMessage}}</h4>
+        </div>
+    </div>
+    <div id="items" ng-if="showItems">
+        <div ng-repeat="expenseItem in expenseItems" class="md-padding">
+            <div>
+                <p>{{$index + 1}}</p>
+            </div>
+            <!-- here will be used a custom-directive for viewing the expenses-->
+            <div ng-if="showSelfExpenses">
+                <self-expense expense-item="expenseItem" expense="expense"></self-expense>
+            </div>
+            <div ng-if="showPerdiemExpenses">
+                <perdiem-expense expense-item="expenseItem" expense="expense"></perdiem-expense>
+            </div>
+            <div ng-if="showOverTimeExpenses">
+                <over-time-expense expense-item="expenseItem" expense="expense"></over-time-expense>
+            </div>
+        </div>
+    </div>
+</div>

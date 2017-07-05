@@ -1,0 +1,5 @@
+D:\iTi related\Schneider Electric\3.3\SchneiderElectric.InvoicingSystem.Domain\bin\Debug\SchneiderElectric.InvoicingSystem.Domain.dll
+D:\iTi related\Schneider Electric\3.3\SchneiderElectric.InvoicingSystem.Domain\bin\Debug\SchneiderElectric.InvoicingSystem.Domain.pdb
+D:\iTi related\Schneider Electric\3.3\SchneiderElectric.InvoicingSystem.Domain\obj\Debug\SchneiderElectric.InvoicingSystem.Domain.csprojResolveAssemblyReference.cache
+D:\iTi related\Schneider Electric\3.3\SchneiderElectric.InvoicingSystem.Domain\obj\Debug\SchneiderElectric.InvoicingSystem.Domain.dll
+D:\iTi related\Schneider Electric\3.3\SchneiderElectric.InvoicingSystem.Domain\obj\Debug\SchneiderElectric.InvoicingSystem.Domain.pdb

@@ -1,0 +1,66 @@
+﻿body {
+    background: #eee;
+    -webkit-font-smoothing: antialiased;
+}
+
+.login {
+    text-align: center;
+}
+/* Form Styles */
+
+form {
+    width: 30%;
+    margin: 4em auto;
+    padding: 3em 2em 2em 2em;
+    background: #fafafa;
+    border: 1px solid #ebebeb;
+    box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
+}
+
+md-input-container.md-icon-float {
+    margin-bottom: 10px;
+}
+
+md-input-container ng-messages,
+md-input-container [ng-messages] {
+    padding-left: 36px;
+}
+
+.md-button.md-raised:not([disabled]) {
+    width: 100%;
+    margin-top: 40px;
+    height: 48px;
+    color: white;
+}
+/* Footer Styles */
+
+footer p {
+    color: #888;
+    font-size: 13px;
+    letter-spacing: .4px;
+}
+
+footer a {
+    color: #4a89dc;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+    footer a:hover {
+        color: #666;
+        text-decoration: underline;
+    }
+
+footer img {
+    width: 180px;
+    transition: all .2s ease;
+}
+
+footer img:hover {
+    opacity: .83;
+}
+
+footer img:focus,
+footer a:focus {
+    outline: none;
+}

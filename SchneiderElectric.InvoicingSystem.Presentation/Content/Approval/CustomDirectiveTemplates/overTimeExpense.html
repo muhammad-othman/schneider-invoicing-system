@@ -1,0 +1,39 @@
+﻿<!-- didn't use disable-editing="!canBeEdited" to improve performance -->
+<md-card class="md-padding card-background-color" ng-class="opacity">
+    <div layout="row" layout-align="space-between center">
+        <md-input-container>
+            <label>Number of Hours</label>
+            <input type="number" ng-model="expenseItem.NumberOfHours" ng-disabled="!canBeEdited">
+        </md-input-container>
+    </div>
+    <div>
+        <md-input-container>
+            <label>Category</label>
+            <md-select name="category" ng-model="expenseItem.ExpenseCategory" ng-disabled="!canBeEdited">
+                <md-optgroup>
+                    <md-option ng-repeat="category in categories" ng-value="category.ExpenseCategoryId">{{category.ExpenseCategoryType}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout="row" layout-align="space-between start">
+        <md-input-container flex="30">
+            <label>Currency</label>
+            <md-select name="type" ng-model="expenseItem.Currency.CurrencyID" ng-disabled="!canBeEdited">
+                <md-option ng-repeat="currency in currencies" ng-value="currency.CurrencyID">{{currency.CurrencySymbol}}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>Rate</label>
+            <input required type="number" min="0.1" step="0.1" name="Rate" ng-model="expenseItem.RateToUS" ng-disabled="!canBeEdited"/>
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>Amount</label>
+            <input required type="number" min="1" step="0.5" name="Amount" ng-model="expenseItem.Amount" ng-disabled="!canBeEdited"/>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <!-- links to files -->
+    </div>
+    <reject-expense-item-button expense-item="expenseItem" expense="expense" ng-disabled="!canBeEdited"></reject-expense-item-button>
+</md-card>

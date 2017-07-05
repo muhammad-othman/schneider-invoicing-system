@@ -1,0 +1,42 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <!--<h2>{{expense.EmployeeName}}</h2>-->
+            <h3>Expense Details</h3>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeDialog()">
+                <img src="/Content/Shared/img/icons/ic_close_24px.svg" />
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-tabs class="card-dimensions">
+            <md-tab label="Info" md-dynamic-height>
+                <md-content>
+                    <expense-information expense="expense"></expense-information>
+                </md-content>
+            </md-tab>
+            <md-tab label="Self" md-dynamic-height>
+                <md-content>
+                    <expense-items-viewer expense="expense" type="SelfExpenses"></expense-items-viewer>
+                </md-content>
+            </md-tab>
+            <md-tab label="Perdiem" md-dynamic-height>
+                <md-content>
+                    <expense-items-viewer expense="expense" type="PerdiemExpenses"></expense-items-viewer>
+                </md-content>
+            </md-tab>
+            <md-tab label="Overtime" md-dynamic-height>
+                <md-content>
+                    <expense-items-viewer expense="expense" type="OverTimeExpenses"></expense-items-viewer>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button class="md-link md-warn" ng-click="cancelExpense()" ng-hide="hideCancelExpenseButton">{{cancelExpenseButtonText}}</md-button>
+        <span flex></span>
+        <md-button class="md-raised md-warn" ng-click="closeDialog()">Cancel</md-button>
+        <md-button class="md-raised md-primary" ng-click="submitExpense()">{{submitExpenseButtonText}}</md-button>
+    </md-dialog-actions>
+</md-dialog>

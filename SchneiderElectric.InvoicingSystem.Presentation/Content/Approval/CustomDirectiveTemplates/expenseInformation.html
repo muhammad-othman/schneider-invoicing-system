@@ -1,0 +1,80 @@
+﻿<div>
+    <div id="error" ng-if="showError" layout-align="center center">
+        <div class="md-padding">
+            <h4>{{errorMessage}}</h4>
+        </div>
+    </div>
+    <div id="items" ng-if="showItems" class="md-padding">
+        <div>
+            <div ng-if="showComments">
+                <div>
+                    <p>Rejection Comment</p>
+                </div>
+                <md-card class="md-padding card-background-color">
+                    <div flex="40">
+                        <p>{{latestComment.DateRejected.toDateString()}}</p>
+                    </div>
+                    <br /><br />
+                    <div>
+                        <label>{{latestComment.Comment}}</label>
+                    </div>
+                </md-card>
+            </div>
+            <br/>
+            <div>
+                <p>Expense Information</p>
+            </div>
+            <!-- disable-editing="true" is not used here to improve performance -->
+            <md-card class="md-padding card-background-color">
+                <div layout="row" layout-align="space-between center">
+                    <md-input-container flex="40">
+                        <label>Engineer Name</label>
+                        <input ng-model="expense.EmployeeName" ng-disabled="!canBeEdited">
+                    </md-input-container>
+                    <md-input-container flex="40">
+                        <label>Project Name</label>
+                        <input ng-model="expense.ProjectName" ng-disabled="!canBeEdited">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between center">
+                    <md-input-container flex="40">
+                        <label>Engineer Sap Number</label>
+                        <input ng-model="expense.EmployeeSapId" ng-disabled="!canBeEdited">
+                    </md-input-container>
+                    <md-input-container flex="40">
+                        <label>Project Sap Number</label>
+                        <input ng-model="expense.ProjectSapId" ng-disabled="!canBeEdited">
+                    </md-input-container>
+                </div>
+                <br/>
+                <div layout="row">
+                    <md-input-container flex="40">
+                        <label>Country</label>
+                        <md-select name="type" ng-model="expense.CountryList.ID" placeholder="Traveled To" ng-disabled="!canBeEdited">
+                            <md-option ng-repeat="country in countries" ng-value="country.ID">{{country.Country}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br/><br/>
+                <div layout="row">
+                    <md-input-container flex="100">
+                        <label>Description</label>
+                        <textarea name="Description" ng-model="expense.ExpenseDescription" md-maxlength="150" ng-disabled="!canBeEdited"></textarea>
+                    </md-input-container>
+                </div>
+                <br />
+                <div layout="row" layout-align="space-between center">
+                    <div flex="40">
+                        <label>Start Date</label>
+                        <md-datepicker ng-model="expense.StartDate" md-placeholder="From" ng-disabled="!canBeEdited"></md-datepicker>
+                    </div>
+                    <div flex="40">
+                        <label>End Date</label>
+                        <md-datepicker ng-model="expense.EndDate" md-placeholder="To" ng-disabled="!canBeEdited"></md-datepicker>
+                    </div>
+                </div>
+            </md-card>
+            <attachments-viewer expense="expense"></attachments-viewer>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿<!-- didn't use disable-editing="!canBeEdited" to improve performance -->
+<md-card class="md-padding card-background-color" ng-class="opacity">
+    <div>
+        <md-input-container>
+            <label>Type</label>
+            <md-select name="type" ng-model="expenseItem.ExpenseType" ng-disabled="expenseItem.ByAmex||!canBeEdited">
+                <md-optgroup label="Choose an Expense Type">
+                    <md-option ng-repeat="expenseType in expenseTypes" ng-value="expenseType.ExpenseTypeId">{{expenseType.ExpenseTypeName}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+    <md-input-container flex="50">
+        <md-checkbox name="ByAmex" ng-model="expenseItem.ByAmex" ng-disabled="!canBeEdited">By Amex?</md-checkbox>
+    </md-input-container>
+    <div layout="row" layout-align="space-between start">
+        <md-input-container flex="30">
+            <label>Amount</label>
+            <input type="number" min="0.5" step="0.5" name="Amount" ng-model="expenseItem.Amount" ng-disabled="!canBeEdited" />
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>Currency</label>
+            <md-select name="currency" ng-model="expenseItem.Currency.CurrencyID" ng-disabled="expenseItem.ByAmex||!canBeEdited">
+                <md-optgroup label="Choose a Currency">
+                    <md-option ng-repeat="currency in currencies" ng-value="currency.CurrencyID">{{currency.CurrencySymbol}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>Rate</label>
+            <input type="number" min="0.1" step="0.1" name="Rate" ng-model="expenseItem.RateToUS" ng-disabled="expenseItem.ByAmex||!canBeEdited" />
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <md-input-container flex="100">
+            <label>Description</label>
+            <textarea name="Description" ng-model="expenseItem.Description" md-maxlength="150" ng-disabled="!canBeEdited"></textarea>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <!-- links to files -->
+    </div>
+    <reject-expense-item-button expense-item="expenseItem" expense="expense" ng-disabled="!canBeEdited"></reject-expense-item-button>
+    
+</md-card>

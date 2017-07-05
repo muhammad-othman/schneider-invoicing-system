@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <title>Schneider Invoicing System</title>
+
+    <!-- Angular Material requires Angular.js Libraries -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+    <!--Icons font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="~/Scripts/Login/AngularApp.js"></script>
+
+    <!-- Styles -->
+    <link href="~/Content/Login/login_style.css" rel="stylesheet" />
+
+</head>
+
+<body style="background-color: white">
+    <div ng-app="myApp" ng-cloak layout="column">
+        <div class="login" ng-controller="loginController">
+            <md-toolbar class="md-primary">
+                <div class="md-toolbar-tools">
+                    <h2 flex md-truncate>
+                        <md-icon md-font-library="material-icons" class="md-light md-48">transfer_within_a_station</md-icon>
+                        Login Form
+                    </h2>
+                </div>
+            </md-toolbar>
+
+            <form name="clientLogin" method="post" action="/Test/Login">
+                <md-input-container>
+                    <md-icon md-font-library="material-icons" class="md-light md-48">person</md-icon>
+                    <input ng-model="emp.sapNum" name="sapNumber" type="text" placeholder="SAP_number" ng-required="true" ng-blur="AssignRole()">
+                    <div ng-messages="clientLogin.sapNumber.$error">
+                        <div ng-message="required">Your SAP name is required.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <md-icon md-font-library="material-icons" class="md-light md-48">vpn_key</md-icon>
+                    <input ng-model="emp.password" type="text" placeholder="password" ng-required="true" name="password">
+                    <div ng-messages="clientLogin.password.$error">
+                        <div ng-message="required">Your password is required.</div>
+                    </div>
+                </md-input-container>
+
+                <md-button class="md-primary md-raised" type="submit">
+                    Login
+                    <md-icon md-font-library="material-icons" class="md-light md-48">login</md-icon>
+                </md-button>
+            </form>
+
+            <footer>
+                <a href="http://www.schneider-electric.com.eg/en/" target="_blank">
+                    <img src="~/Content/Shared/img/schneider.png" />
+                </a>
+                <p>© 2015 Schneider Electric Software, LLC. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

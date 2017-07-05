@@ -1,0 +1,67 @@
+﻿.card-dimensions {
+    max-height: 400px !important;
+    min-height: 400px !important;
+    width: 800px !important;
+}
+
+.card-background-color {
+    background-color: ghostwhite;
+}
+
+md-dialog {
+    background-color: #FAFAFA !important;
+}
+
+md-tabs-canvas {
+    background-color: rgba(0, 255, 0, 0.05);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.red-color {
+    /*color:red !important;
+    */font-weight: bold !important;
+}
+
+.red-color::after {
+    content: '*';
+    color: red;
+    font-weight: bold;
+}
+
+.width-auto {
+    width: auto !important;
+}
+
+.half-opacity {
+    opacity: 0.5;
+}
+
+th, td {
+    padding: 1.5rem;
+    font-size: 1.3rem;
+}
+
+tr, td {
+    transition: 0.1s ease-in-out;
+}
+
+tbody tr.selected {
+    background-color: rgba(0, 255, 0, 0.1) !important;
+}
+
+tbody tr:hover {
+    background-color: lightgreen !important;
+    transform: scale(1);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
+}
+
+tbody tr {
+    outline: none;
+}
+
+tbody tr.selected td {
+    /*border: none;*/
+}

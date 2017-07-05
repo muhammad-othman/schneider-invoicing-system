@@ -1,0 +1,29 @@
+﻿<!-- didn't use disable-editing="!canBeEdited" to improve performance -->
+<md-card class="md-padding card-background-color" ng-class="opacity">
+    <div layout="row" layout-align="space-between center">
+        <md-input-container>
+            <label>Number of Days</label>
+            <input type="number" ng-model="expenseItem.NumberOfDays" ng-disabled="!canBeEdited">
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <md-input-container>
+            <label>Rate</label>
+            <md-select name="Rate" ng-model="expenseItem.Rate.RateId" ng-disabled="!canBeEdited">
+                <md-optgroup label="Choose a rate">
+                    <md-option ng-repeat="rate in rates" ng-value="rate.RateId">{{rate.RateType}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <md-input-container flex="40">
+            <label>Amount</label>
+            <input required type="number" min="1" step="1" name="Amount" ng-model="expenseItem.Amount" ng-disabled="!canBeEdited"/>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <!-- links to files -->
+    </div>
+    <reject-expense-item-button expense-item="expenseItem" expense="expense" ng-disabled="!canBeEdited"></reject-expense-item-button>
+</md-card>

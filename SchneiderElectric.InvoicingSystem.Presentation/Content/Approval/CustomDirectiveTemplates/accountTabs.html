@@ -1,0 +1,16 @@
+﻿<div>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Active" id="activeTab">
+            <expenses-table class="md-padding" expense-type="active"></expenses-table>
+        </md-tab>
+        <md-tab label="Cancelled" ng-if="showCancelled" ng-click="clickTab('cancelled')">
+            <expenses-table class="md-padding" expense-type="cancelled"></expenses-table>
+        </md-tab>
+        <md-tab label="Rejected" ng-if="showRejected" ng-click="clickTab('rejected')">
+            <expenses-table class="md-padding" expense-type="rejected"></expenses-table>
+        </md-tab>
+        <md-tab label="Pending" ng-click="clickTab('all')">
+            <expenses-table class="md-padding" expense-type="all"></expenses-table>
+        </md-tab>
+    </md-tabs>
+</div>
