@@ -20,6 +20,5 @@ namespace SchneiderElectric.InvoicingSystem.Application.Queries.Interfaces
         List<ExpenseDTO> GetCanceled(string employeeSap);
         List<ExpenseDTO> GetRejected(string employeeSap);
         List<RejectedComment> GetRejctedComments(Guid expenseId);
-
     }
 }
